@@ -65,8 +65,7 @@ Manual waste sorting can be time-consuming and prone to errors, leading to conta
 
 ## Media
 
-All project photos and videos are available here:  
-📁 [View on Google Drive](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing)
+All project photos and videos are available here:  [Google Drive link](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing)
 
 ---
 
