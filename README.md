@@ -27,5 +27,10 @@ To automate waste sorting using sensors and servos, helping with eco-friendly re
 - Motorized sorting with servo control
 - Expandable for smart home or school projects
 
+## Media
+
+All project photos and videos are available here:  
+📁 [View on Google Drive](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing)
+
 ## Code
 Coming soon! (Will include analog reading, thresholds, and servo control logic)
