@@ -2,19 +2,16 @@
 
 This is an Arduino-powered smart garbage can that detects **metal**, **plastic**, and **general waste**, then uses servo motors to sort them into separate bins.
 
----
 
 ## Objective
 
 To automate waste sorting using sensors and servos, helping with eco-friendly recycling and efficient disposal.
 
----
 
 ## Background / Motivation
 
 Manual waste sorting can be time-consuming and prone to errors, leading to contamination of recyclable materials. This project aims to simplify the process by automatically detecting and sorting metal, plastic, and general waste, encouraging better recycling habits.
 
----
 
 ## Components
 
@@ -25,7 +22,6 @@ Manual waste sorting can be time-consuming and prone to errors, leading to conta
 - Arduino Uno  
 - Breadboard + jumper wires  
 
----
 
 ## How It Works
 
@@ -36,7 +32,6 @@ Manual waste sorting can be time-consuming and prone to errors, leading to conta
   - **Other trash** ➝ Red LED on ➝ Servo keeps default position  
 - After sorting, the lid closes and resets for the next item.  
 
----
 
 ## Features
 
@@ -45,7 +40,6 @@ Manual waste sorting can be time-consuming and prone to errors, leading to conta
 - Motorized sorting with servo control  
 - Expandable for smart home or school projects  
 
----
 
 ## Usage Instructions
 
@@ -53,7 +47,6 @@ Manual waste sorting can be time-consuming and prone to errors, leading to conta
 2. Upload the Arduino code to the board using the Arduino IDE.  
 3. Power the Arduino and test the system by placing metal or plastic items near the sensors.  
 
----
 
 ## Future Work
 
@@ -61,13 +54,11 @@ Manual waste sorting can be time-consuming and prone to errors, leading to conta
 - Implement machine learning models for improved material classification.  
 - Design and 3D-print a custom enclosure for a finished prototype.  
 
----
 
 ## Media
 
 All project photos and videos are available here:  [Google Drive link](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing)
 
----
 
 ## Code
 
