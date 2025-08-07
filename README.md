@@ -108,7 +108,6 @@ void loop() {
 
   delay(500);
 }
-
 ```
 ## Contact
 For questions or collaboration, feel free to reach out: mardhiata@gmail.com
