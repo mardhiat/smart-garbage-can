@@ -33,4 +33,43 @@ All project photos and videos are available here:
 📁 [View on Google Drive](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing)
 
 ## Code
-Coming soon! (Will include analog reading, thresholds, and servo control logic)
+
+## 💻 Source Code
+
+```cpp
+int ledGreen = 5;
+int ledRed = 6;
+int servoPin = 9;
+int metalSensor = A0;  // Analog metal sensor
+int sensorThreshold = 100;
+
+#include <Servo.h>
+Servo myServo;
+
+void setup() {
+  pinMode(ledGreen, OUTPUT);
+  pinMode(ledRed, OUTPUT);
+  myServo.attach(servoPin);
+  myServo.write(0);  // Initial position
+  Serial.begin(9600);
+}
+
+void loop() {
+  int sensorValue = analogRead(metalSensor);
+  Serial.println(sensorValue);
+
+  if (sensorValue > sensorThreshold) {
+    digitalWrite(ledGreen, HIGH);
+    digitalWrite(ledRed, LOW);
+    myServo.write(90);  // Rotate to push metal item
+    delay(1000);
+    myServo.write(0);   // Reset
+  } else {
+    digitalWrite(ledGreen, LOW);
+    digitalWrite(ledRed, HIGH);
+    myServo.write(0);  // Stay still
+  }
+
+  delay(500);
+}
+
