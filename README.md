@@ -34,9 +34,6 @@ All project photos and videos are available here:
 
 ## Code
 
-## 💻 Source Code
-
-```cpp
 int ledGreen = 5;
 int ledRed = 6;
 int servoPin = 9;
