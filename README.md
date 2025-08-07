@@ -10,7 +10,16 @@ To automate waste sorting using sensors and servos, helping with eco-friendly re
 
 ## Background / Motivation
 
-Manual waste sorting can be time-consuming and prone to errors, leading to contamination of recyclable materials. This project aims to simplify the process by automatically detecting and sorting metal, plastic, and general waste, encouraging better recycling habits.
+Sorting waste by hand is inefficient and often leads to recycling contamination. This project explores a low-cost, sensor-based solution to detect different types of materials and sort them automatically.
+
+I built this project as part of an independent study during my senior year of high school (2022–2023). At the time, I had no formal training in coding or engineering. All the hardware, software, wiring, research, etc was entirely self-taught.
+This project reflects my ability to:
+
+- Learn new technologies independently
+
+- Apply problem-solving to real-world challenges
+
+- Integrate hardware and software into a functional system
 
 
 ## Components
