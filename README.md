@@ -19,15 +19,13 @@ The only program in the repo is [`smart_garbage_can.ino`](smart_garbage_can.ino)
 
 ## Hardware
 
-These parts match the build photos and the silkscreen on the board.
-
 - Arduino Uno R3
 - Inductive proximity sensor with an orange sensing face and its own indicator LED. This is the sensor on A0. The part number was not written down.
-- Two smaller cylindrical sensors with blue rings. They are in the bench photos. This sketch does not read them.
-- Two hobby servos. During bring-up they were loose on the bench. In this sketch, pin 6 is the lid and pin 5 is the diverter.
+- Two smaller cylindrical sensors. This sketch does not read them.
+- Two hobby servos. Pin 6 is the lid and pin 5 is the diverter.
 - Green LED on pin 3 and red LED on pin 4, each with a series resistor
 - Breadboard and jumper wires
-- 9V battery, sitting with the sensor leads in the bench photo
+- 9V battery for the sensor
 
 ## Wiring
 
@@ -42,7 +40,7 @@ These parts match the build photos and the silkscreen on the board.
 
 `Servo` on the Uno uses Timer1, so `analogWrite()` on pins 9 and 10 stays unavailable while the servos are attached. This sketch does not use those pins.
 
-Give the proximity sensor the supply it expects. A sensor of this shape often needs more than the Uno 5 V pin, which is consistent with the 9V battery in the bench photo. Give loaded servos their own 5 V to 6 V supply. Tie the grounds together. Keep the 9V battery off of A0.
+Give the proximity sensor the supply it expects. A sensor of this shape often needs more than the Uno 5 V pin, so it runs from the 9V battery. Give loaded servos their own 5 V to 6 V supply. Tie the grounds together. Keep the 9V battery off of A0.
 
 ## Calibrate
 
@@ -64,21 +62,15 @@ Open the Serial Monitor at 9600 baud. The sketch prints `idle,<counts>` or `hold
 
 The working path is metal versus no metal, with two servos and two LEDs.
 
-The two smaller sensors in the photos are the next input. Wiring one of them, and giving that reading its own servo position, is how a second material gets added. A housing and separate bins belong after that sensor is real. None of that is in this sketch.
+The two smaller sensors are the next thing to wire up. Giving that reading its own servo position is how a second material gets added. A housing and separate bins come after that. None of that is in this sketch.
 
 ## Photos
 
-Bring-up on the carpet. The orange-face sensor, the two smaller sensors, both servos, the Uno, and the 9V battery are in frame.
+![Bench setup](images/bench-setup.jpg)
 
-![Bench setup with the Uno, two servos, the inductive sensor, two smaller sensors, and a 9V battery](images/bench-setup.jpg)
+![LED test](images/breadboard-led.jpg)
 
-First LED test. The red LED is on, with series resistors on the breadboard.
-
-![Red LED lit on a breadboard beside an Arduino Uno R3](images/breadboard-led.jpg)
-
-Servo test. The board silkscreen reads Uno R3.
-
-![Two hobby servos wired to an Arduino Uno R3](images/uno-and-servos.jpg)
+![Servo test](images/uno-and-servos.jpg)
 
 Longer clips from soldering, sensor tests, and servo tests are in this folder: [project media on Google Drive](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing).
 
