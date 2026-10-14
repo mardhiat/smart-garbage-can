@@ -1,112 +1,91 @@
-# Smart Garbage Can (Arduino Project)
+# Smart Garbage Can
 
-This is an Arduino-powered smart garbage can that detects **metal**, **plastic**, and **general waste**, then uses servo motors to sort them into separate bins.
+An Arduino Uno R3 sketch that detects metal with one inductive proximity sensor and moves two servos when the reading crosses a threshold.
 
+I built the hardware during an independent study in my senior year of high school (2022–2023). I had no formal training in coding or engineering. The wiring, the sensor tests, and the code were self-taught.
 
-## Objective
+## What it does
 
-To automate waste sorting using sensors and servos, helping with eco-friendly recycling and efficient disposal.
+The sketch reads analog pin A0.
 
+- Above 540 counts, it treats the reading as metal. The green LED turns on, the red LED turns off, the lid servo opens, then the diverter servo moves to the metal stop.
+- Below 460 counts, it treats the reading as no metal. The diverter returns home, the lid closes, the green LED turns off, and the red LED turns on.
+- Between 460 and 540, it holds the previous state. That gap keeps a noisy reading near the threshold from chattering the servos.
+- Each servo is commanded once per change. The loop does not call `write()` on every sample.
 
-## Background / Motivation
+A reading under 460 means this sensor does not see metal. That covers an empty face and any object the sensor ignores. The sketch does not classify plastic or general waste.
 
-Sorting waste by hand is inefficient and often leads to recycling contamination. This project explores a low-cost, sensor-based solution to detect different types of materials and sort them automatically.
+The only program in the repo is [`smart_garbage_can.ino`](smart_garbage_can.ino).
 
-I built this project as part of an independent study during my senior year of high school (2022–2023). At the time, I had no formal training in coding or engineering. All the hardware, software, wiring, research, etc was entirely self-taught.
-This project reflects my ability to:
+## Hardware
 
-- Learn new technologies independently
+These parts match the build photos and the silkscreen on the board.
 
-- Apply problem-solving to real-world challenges
+- Arduino Uno R3
+- Inductive proximity sensor with an orange sensing face and its own indicator LED. This is the sensor on A0. The part number was not written down.
+- Two smaller cylindrical sensors with blue rings. They are in the bench photos. This sketch does not read them.
+- Two hobby servos. During bring-up they were loose on the bench. In this sketch, pin 6 is the lid and pin 5 is the diverter.
+- Green LED on pin 3 and red LED on pin 4, each with a series resistor
+- Breadboard and jumper wires
+- 9V battery, sitting with the sensor leads in the bench photo
 
-- Integrate hardware and software into a functional system
+## Wiring
 
+| Uno pin | Connection |
+| --- | --- |
+| A0 | Signal from the inductive sensor. Keep this pin between 0 V and 5 V. |
+| D3 | Green LED, through a resistor, to ground. On while metal is latched. |
+| D4 | Red LED, through a resistor, to ground. On while no metal is latched. |
+| D5 | Diverter servo signal. Home is 0°. Metal stop is 180°. |
+| D6 | Lid servo signal. Closed is 0°. Open is 180°. |
+| GND | Common ground for the Uno, the LEDs, the servo supply, and the sensor supply. |
 
-## Components
+`Servo` on the Uno uses Timer1, so `analogWrite()` on pins 9 and 10 stays unavailable while the servos are attached. This sketch does not use those pins.
 
-- Metal sensor (analog)  
-- Plastic detection sensor (e.g., IR sensor or ML mock)  
-- 2x Servo motors (for lid movement or bin rotation)  
-- 3x LED lights (green for metal, blue for plastic, red for trash)  
-- Arduino Uno  
-- Breadboard + jumper wires  
+Give the proximity sensor the supply it expects. A sensor of this shape often needs more than the Uno 5 V pin, which is consistent with the 9V battery in the bench photo. Give loaded servos their own 5 V to 6 V supply. Tie the grounds together. Keep the 9V battery off of A0.
 
+## Calibrate
 
-## How It Works
+Open the Serial Monitor at 9600 baud. The sketch prints `idle,<counts>` or `hold,<counts>` about twice a second, and `metal,<counts>` or `no-metal,<counts>` when the state changes.
 
-- The garbage can uses sensors to detect the type of material inserted.  
-- Based on detection:  
-  - **Metal** ➝ Green LED on ➝ Servo rotates to metal bin  
-  - **Plastic** ➝ Blue LED on ➝ Servo rotates to plastic bin  
-  - **Other trash** ➝ Red LED on ➝ Servo keeps default position  
-- After sorting, the lid closes and resets for the next item.  
+500 counts is about 2.44 V on the Uno's 5 V, 10-bit converter (`500 / 1023 * 5`). A proximity sensor that swings fully high or low will sit near 0 or near 1023, and 500 is only the midpoint. If a metal object lands on the wrong side of the test, change `sensorThreshold` in `smart_garbage_can.ino`. The on-level is that value plus 40. The off-level is that value minus 40.
 
+`homeAngle`, `activeAngle`, and `motionSettleMs` are the mechanical settings. Bring-up used 0° and 180°. Lower `activeAngle` if a horn stalls on a stop.
 
-## Features
+## Run
 
-- Automatic waste classification  
-- Real-time feedback with colored LEDs  
-- Motorized sorting with servo control  
-- Expandable for smart home or school projects  
+1. Wire the board to the table above.
+2. Install the Arduino IDE, open `smart_garbage_can.ino`, and select **Arduino Uno** and its port.
+3. Upload the sketch.
+4. Open the Serial Monitor at 9600 baud.
+5. Hold metal on the orange face of the sensor. The green LED turns on, the lid opens, and the diverter follows. Take the metal away. The diverter returns, the lid closes, and the red LED turns on.
 
+## Limits and next steps
 
-## Usage Instructions
+The working path is metal versus no metal, with two servos and two LEDs.
 
-1. Connect the sensors, LEDs, and servos to the Arduino as specified in the code.  
-2. Upload the Arduino code to the board using the Arduino IDE.  
-3. Power the Arduino and test the system by placing metal or plastic items near the sensors.  
+The two smaller sensors in the photos are the next input. Wiring one of them, and giving that reading its own servo position, is how a second material gets added. A housing and separate bins belong after that sensor is real. None of that is in this sketch.
 
+## Photos
 
-## Future Work
+Bring-up on the carpet. The orange-face sensor, the two smaller sensors, both servos, the Uno, and the 9V battery are in frame.
 
-- Integrate plastic detection sensor fully and add related servo control.  
-- Implement machine learning models for improved material classification.  
-- Design and 3D-print a custom enclosure for a finished prototype.  
+![Bench setup with the Uno, two servos, the inductive sensor, two smaller sensors, and a 9V battery](images/bench-setup.jpg)
 
+First LED test. The red LED is on, with series resistors on the breadboard.
 
-## Media
+![Red LED lit on a breadboard beside an Arduino Uno R3](images/breadboard-led.jpg)
 
-All project photos and videos are available here:  [Google Drive link](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing)
+Servo test. The board silkscreen reads Uno R3.
 
+![Two hobby servos wired to an Arduino Uno R3](images/uno-and-servos.jpg)
 
-## Code
+Longer clips from soldering, sensor tests, and servo tests are in this folder: [project media on Google Drive](https://drive.google.com/drive/folders/1WMvN9db4KP4SwLWDAoNWmgD6A0NWS14E?usp=sharing).
 
-```cpp
-int ledGreen = 5;
-int ledRed = 6;
-int servoPin = 9;
-int metalSensor = A0;  // Analog metal sensor
-int sensorThreshold = 100;
+## License
 
-#include <Servo.h>
-Servo myServo;
+MIT. See [LICENSE](LICENSE).
 
-void setup() {
-  pinMode(ledGreen, OUTPUT);
-  pinMode(ledRed, OUTPUT);
-  myServo.attach(servoPin);
-  myServo.write(0);  // Initial position
-  Serial.begin(9600);
-}
-
-void loop() {
-  int sensorValue = analogRead(metalSensor);
-  Serial.println(sensorValue);
-
-  if (sensorValue > sensorThreshold) {
-    digitalWrite(ledGreen, HIGH);
-    digitalWrite(ledRed, LOW);
-    myServo.write(90);  // Rotate to push metal item
-    delay(1000);
-    myServo.write(0);   // Reset
-  } else {
-    digitalWrite(ledGreen, LOW);
-    digitalWrite(ledRed, HIGH);
-    myServo.write(0);  // Stay still
-  }
-
-  delay(500);
-}
-```
 ## Contact
-For questions or collaboration, feel free to reach out: mardhiata@gmail.com
+
+mardhiata@gmail.com
